@@ -1,0 +1,18 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "OeisA189286.conjecture_1",
+    "OeisA189286.conjecture_3"
+  ],
+  "definition_names": [
+    "OeisA189286.tTerm",
+    "OeisA189286.a"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}

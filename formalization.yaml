@@ -1,0 +1,131 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "Formal Proof of OEIS A189286 Integrality and 2-adic Divisibility Conjectures"
+  description: >-
+    Complete Lean 4 formal proofs of two conjectures by Zhi-Wei Sun (2011) on
+    OEIS A189286, defined by
+    a(n) = (sum_{k=0}^n C(6k,3k) C(3k,k) C(6(n-k),3(n-k)) C(3(n-k),n-k)) / ((2n-1) C(3n,n)).
+    First, a(n) is an integer for every n >= 0 (conjecture_1), proved via
+    termwise p-adic divisibility using Legendre's formula and a 3-adic lifting
+    argument. Second, for every n >= 1, a(n) is divisible by 8 and a(n)/8 is odd
+    if and only if n is a power of two (conjecture_3), proved via Kummer's
+    theorem, binary submask counting, and a fixed-point-free involution mod 4.
+  authors:
+    - "Yuto Nakahara"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "Yuto Nakahara"
+
+classification:
+  arxiv: ["math.NT", "math.CO"]
+  msc2020: ["11B65", "11A07"]
+
+sources:
+  - title: "Elementary and 2-adic proof of Zhi-Wei Sun's Conjecture (ii) for OEIS A189286"
+    type: "original-proof"
+    relationship: "other"
+    note: >-
+      First complete formal proof of Conjecture (ii) (OeisA189286.conjecture_3)
+      for OEIS A189286, accompanied by a self-contained elementary proof of
+      integrality (OeisA189286.conjecture_1).
+  - title: "OEIS A189286"
+    authors:
+      - "Zhi-Wei Sun"
+    id: "https://oeis.org/A189286"
+    type: "database-entry"
+    location: "https://oeis.org/A189286"
+    relationship: "background"
+    note: >-
+      Original source defining a(n) and posing the integrality conjecture and
+      Conjecture (ii) on 8-divisibility and parity of a(n)/8 (Apr 19, 2011).
+  - title: "Formal Conjectures: FormalConjectures/OEIS/189286.lean"
+    id: "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/OEIS/189286.lean"
+    type: "formalization"
+    location: "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/OEIS/189286.lean"
+    relationship: "background"
+    license: "Apache-2.0"
+    note: >-
+      Source of the exact Lean 4 definitions (tTerm, a) and theorem statements
+      (conjecture_1, conjecture_3). Note that conjecture_1 was previously proved
+      in T. Adamczewski, arXiv:2608.11941; conjecture_3 was marked research open.
+
+related_formalizations:
+  - id: "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/OEIS/189286.lean"
+    relationship: "builds-on"
+    note: >-
+      Challenge.lean reproduces the definitions OeisA189286.tTerm and
+      OeisA189286.a and the statements OeisA189286.conjecture_1 and
+      OeisA189286.conjecture_3 verbatim from Formal Conjectures.
+
+status:
+  scope: >-
+    Both OeisA189286.conjecture_1 (integrality for all n >= 0) and
+    OeisA189286.conjecture_3 (8 | a(n) and Odd (a(n)/8) <-> n = 2^k for all
+    n >= 1) are completely proved without sorry. The asymptotic limit statement
+    conjecture_2 from FormalConjectures/OEIS/189286.lean is omitted.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["Gemini 4 Neon"]
+      framework: "Google Antigravity"
+      tool_setup: >-
+        Agentic Lean 4 proof development with Mathlib and local lake build
+        verification, followed by independent mathematical referee review of the
+        informal proof outline using GPT-5.6 Sol.
+      cost:
+        wall_time: "not tracked"
+        spend_usd: "subscription-based"
+        hardware: "local machine"
+      prompting_notes: >-
+        Instructed to prove OeisA189286.conjecture_1 and OeisA189286.conjecture_3
+        without altering existing definitions or theorem statements and using only
+        standard axioms.
+  spend_usd: "subscription-based"
+  notes: >-
+    The proofs were developed with Gemini 4 Neon in Google Antigravity under
+    human supervision. The author verified zero statement changes against Formal
+    Conjectures, confirmed a clean lake build and standard-axiom #print axioms
+    output, and checked the mathematical argument with an independent LLM
+    referee (GPT-5.6 Sol).
+
+fidelity:
+  divergences: >-
+    None known for conjecture_1 and conjecture_3; definitions and theorem
+    statements match FormalConjectures/OEIS/189286.lean verbatim. conjecture_2
+    (asymptotic limit) is intentionally excluded from this package.
+
+review:
+  status: "self-assessed"
+  reviewers:
+    - "Yuto Nakahara"
+  notes: >-
+    Verified locally with lake build and #print axioms (only propext,
+    Classical.choice, Quot.sound). Checked verbatim statement fidelity against
+    FormalConjectures/OEIS/189286.lean and audited the step-by-step mathematical
+    proof via an independent LLM referee (GPT-5.6 Sol).
+
+alignment:
+  namespace: "OeisA189286"
+  statements:
+    - source: "OEIS A189286 integrality conjecture (Zhi-Wei Sun, Apr 19 2011)"
+      lean: "OeisA189286.conjecture_1"
+      module: "Solution"
+      status: "proved"
+      note: "Exact statement from FormalConjectures/OEIS/189286.lean."
+    - source: "OEIS A189286 Conjecture (ii) (Zhi-Wei Sun, Apr 19 2011)"
+      lean: "OeisA189286.conjecture_3"
+      module: "Solution"
+      status: "proved"
+      note: "Exact statement from FormalConjectures/OEIS/189286.lean."
+
+acknowledgements: >-
+  Built with Lean 4 and Mathlib. Problem statements adapted from the Google
+  DeepMind Formal Conjectures repository (Apache-2.0). Original conjectures due
+  to Zhi-Wei Sun (OEIS A189286); prior integrality proof due to T. Adamczewski
+  (arXiv:2608.11941).
